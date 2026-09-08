@@ -58,10 +58,14 @@ else:
 
 # 5. 一键导出报表（对应“数据导出”）
 st.subheader("💾 导出处理后的文件")
-csv = df.to_csv(index=False).encode('utf-8')
+st.subheader("💾 导出处理后的文件")
+
+# 加上 BOM（\ufeff），让 Excel 识别为 UTF-8
+csv_with_bom = '\ufeff' + df.to_csv(index=False, encoding='utf-8')
+
 st.download_button(
     label="⬇️ 点击下载CSV报表",
-    data=csv,
+    data=csv_with_bom,
     file_name='处理后的业务报表.csv',
     mime='text/csv'
 )
